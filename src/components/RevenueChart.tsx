@@ -34,7 +34,7 @@ export function RevenueChart({ data, currency }: RevenueChartProps) {
               axisLine={false}
               tickLine={false}
               tick={{ fill: '#6b7280', fontSize: 12 }}
-              tickFormatter={(value: number | undefined) => `${currency}${value || 0}`}
+              tickFormatter={(value: any) => `${currency}${value || 0}`}
             />
             <Tooltip 
               contentStyle={{ 
@@ -43,7 +43,10 @@ export function RevenueChart({ data, currency }: RevenueChartProps) {
                 borderRadius: '8px',
                 color: '#fff'
               }}
-              formatter={(value: number | undefined) => [`${currency} ${value?.toFixed(2) || '0.00'}`, 'Revenue']}
+              formatter={(value: any) => {
+                const numValue = typeof value === 'number' ? value : parseFloat(value);
+                return [`${currency} ${numValue.toFixed(2)}`, 'Revenue'];
+              }}
             />
             <Bar 
               dataKey="revenue" 
